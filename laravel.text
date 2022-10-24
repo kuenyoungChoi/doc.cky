@@ -1,0 +1,89 @@
+laravel 정리
+
+목차
+개요
+Controller, Model, Resource
+DB Factory/Migration/Seeder
+Eloquent ORM/Relationship, Query Builder
+Event, Listener, Observer, Queue, Notification
+Command
+
+
+개요
+엔티티(객체 또는 개체) : player, client(의뢰자), quest(퀘스트)
+quest-plyer : 다대일
+client-player: 다대다
+지정하기에 따라 유동적으로 관계형성은 바뀔 수 있으나 일반적인 선에서 형성.
+
+Controller, Model, Resource
+목록과 항목의 CRUD를 위한 컨트롤러/모델
+php artisan make:controller Api/v1/Player/PlayersController --api --model=Player/Player
+php artisan make:controller Api/v1/Client/ClientsController --api --model=Client/Client
+php artisan make:controller Api/v1/Quest/QuestsController --api --model=Quest/Quest
+php artisan make:model Client/ClientPlayer
+artisan 콘솔 (명령어) :   참고 - github 업로드 후 경로 수정 예정
+
+모델 설정 : $fillable, $table, $casts - 정확한 의미 파악 필요 ( laravel 공식 문서 참고 - https://laravel.kr/docs/9.x)
+api 응답을 위한 항목 Resource, 목록 ListResource
+php artisan make:resource Player/PlayerResource
+php artisan make:resource Client/ClientListResource
+메소드 구현 : index() - 복수 , show() -단수, store() - create, update() - update, destroy()- delete
+ 참고 - 
+artisan: https://github.com/seokjoon/doc-cs/tree/master/lang.php.laravel/lang.php.laravel.cmd.artisan.md
+resource: https://laravel.kr/docs/8.x/eloquent-resources
+
+DB Factory/Migration/Seeder
+테이블 생성
+php artisan make:migration create_players_table --create=players
+php artisan make:migration create_clients_table --create=clients
+php artisan make:migration create_quests_table --create=quests
+php artisan make:migration create_client_player_table --create=client_player
+php artisan migrate
+제거: php artisan migrate:rollback
+
+샘플 테이터 생성
+php artisan make:factory Player/PlayerFactory --model=Player/Player
+php artisan make:factory Client/ClientFactory --model=Client/Client
+php artisan make:factory Quest/QuestFactory --model=Quest/Quest
+php artisan make:factory Client/ClientPlayerFactory --model=Client/ClientPlayer
+팩토리 파일의 model 속성과 definition 메소드 구현
+php artisan make:seeder PlayersTableSeeder
+php artisan make:seeder ClientsTableSeeder
+php artisan make:seeder QuestsTableSeeder
+php artisan make:seeder ClientPlayerTableSeeder
+편집: DatabaseSeeder.php
+외래키 제한 임시 비활성 필요
+php artisan db:seed
+
+
+Eloquent ORM/Relationship, Query Builder
+모델 메소드 생성
+Player
+clients(): client-player: 다대다: belongsToMany
+quests(): quest-player: 다대일: hasMany
+Client
+players(): client-player: 다대다: belongsToMany
+Quest
+player(): quest-player: 다대일: belongsTo
+php artisan tinker
+$p = Player::find(1)
+$p->quests
+$p->quests[0]->player
+$p->clients
+$c = Client::find(2)
+$c->players[2]->quests
+$q = Quest::find(5)
+$q->player->clients
+질의, with(eager 로딩), resource
+$outs = Client::with('players')->get()->all();
+$outs = Player::with('clients', 'quests'')->get()->all();
+라우터에서 질의 찍어보면 N+1 문제 여부 확인 가능
+resource, collection 에서 출력 편집
+api/v1/clients
+api/v1/players/2
+참고
+create, update: sync()
+eloquent relationship: https://laravel.kr/docs/6.x/eloquent-relationships
+세부 질의: 쿼리 빌더
+https://laravel.kr/docs/6.x/queries
+https://github.com/seokjoon/doc-cs/tree/master/lang.php.laravel/lang.php.laravel.db.queryBuilder.md

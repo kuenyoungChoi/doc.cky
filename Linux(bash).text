@@ -1,0 +1,208 @@
+bash (리눅스) command
+
+출처 : HaydenJames.io
+몇몇 명령어는 (sudo) 권한이 필요하다.
+바로 전 명령어 실행하기:
+!!
+특정 문자로 시작하는 이전 명령어 실행하기. 예:
+!s
+편집했던 파일을 복사하거나 백업하기. 예로, nginx.conf 복사:
+cp nginx.conf{,.bak}
+현재 디렉토르와 최근 디렉토리 사이를 왔다갔다 하기
+cd -
+부모 디렉토리로 가기. 공백 주의
+cd ..
+홈 디렉토리로 가기
+cd ~
+홈 디렉토리로 가기
+cd $HOME
+홈 디렉토리로 가기
+cd
+755 권한 설정. (owner-group-other) 순으로 (-rwx-r-x-r-x) 권한을 준다.
+chmod 755 파일명
+모든 유저에게 실행권한 추가하기
+chmod a+x 파일명
+파일이나 . 디렉토리의 소유권 변경
+chown 유저명
+file.backup으로 백업 복사본 만들기
+cp file file.backup
+file1을 복사하여 file2 만들기
+cp file1 file2
+directory1의 모든 컨텐트를 directory2로 복사하기 (recursively)
+cp -r directory1 directory2/
+날짜 보기
+date
+Zero the sdb drive. You may want to use GParted to format the drive afterward. You need elevated permissions to run this (sudo).
+dd if=/dev/zero of=/dev/sdb
+디스크 사용량 보기
+df -h
+OS의 상세한 메시지를 텍스트 파일에 넣기
+dmesg>dmesg.txt
+Display a LOT of system information. I usually pipe output to less. You need elevated permissions to run this (sudo).
+dmidecode
+Display BIOS information. You need elevated permissions to run this (sudo).
+dmidecode -t 0
+Display CPU information. You need elevated permissions to run this (sudo).
+dmidecode -t 4
+Search for installed packages related to Apache
+dpkg –get-selections | grep apache
+Shows you where in the filesystem the package components were installed
+dpkg -L package_name
+각 서브디렉토리의 상세한 디스크 사용을 보기
+du / -bh | less
+환경변수 PATH 값을 보기
+echo $PATH
+USER, LANG, SHELL, PATH, TERM과 같은 환경변수 보기
+env
+Opens a picture with the Eye of Gnome Image Viewer
+eog picture_name
+터미널 끝내기 (혹은 sudo su로 하고 있었다면 수퍼유저 포기하기)
+exit
+Display memory usage
+free
+Easy way to view all the system logs.
+gnome-system-log
+파일을 찾아 string이 매칭된 라인 보기
+grep string filename
+Get the number of seconds since the OS was started
+grep btime /proc/stat | grep -Eo “[[:digit:]]+”
+이전 명령어 1000개 보기
+history | less
+로컬 호스트 이름 보기
+hostname
+Display time.
+hwclock –show
+사용자 id (uid) 와 그룹 id (gid) 보기
+id
+로컬 IP 주소와 netmask 보기
+ifconfig
+Wireless network interface
+iwconfig
+Display wireless network information
+iwlist
+Kill process by name. You need elevated permissions to run this (sudo).
+killall process
+Get the date and time of the last system shutdown
+last -x | grep shutdown | head -1 | grep -Eo “[A-Z][a-z]{2} [[:digit:] ][[:digit:]] [[:digit:]]{2}:[[:digit:]]{2}”
+쉘 세션 끝내기 (버추얼 콘솔의 하나로 로그인한 쉘만)
+logout
+현재 디렉토리의 숨겨지지 않은 파일과 서브폴더 목록 보기. -R은 recursive이고 -a는 숨긴 파일을 포함한다.
+ls
+현재 디렉토리의 모든 파일의 파일 접근 권한 보기. 권한의 포맷은 drwxrwxrwx이고, 순서는 owner-group-other, 숫자값은 read=4, write=2, execute=1이다.
+ls -l filename
+가능한 모든 어플리케이션의 목록 보기
+ls /usr/bin | less
+Display more networking information
+lshw -C network
+Display kernel modules currently loaded
+lsmod
+Display sound, video, and networking hardware
+lspci -nv | less
+Display usb-connected hardware
+lsusb
+명령어 man 페이지 읽기 (manual)
+man command
+새 디렉토리 만들기
+mkdir dirname
+특정 디렉토리에 파일 옮기기
+mv file dir
+file1을 file2로 이름바꾸기
+mv file1 file2
+라우팅 테이블 보기
+netstat -rn
+환경 변수 보기
+printenv
+사용자가 현재 실행하고 프로세스 목록 보기. 유용한 옵션이 많으니 ps –help 로 보라.
+ps -Af
+작업 디렉토리 보기
+pwd
+파일 지우기
+rm filename
+디렉토리와 디렉토리의 모든 컨텐트 지우기
+rm -rf dir
+현재 디렉토리의 txt로 끝나는 모든 파일 지우기
+rm *.txt
+디렉토리 지우기 (비어있지 않을 때에만 동작한다)
+rmdir dir
+Display your default gateway listed under “default”
+route
+Completely destroy all traces of the file. This takes a while. -n 7 means seven overwrites, -z means zero the bits afterward to hide shredding, -u means delete the file when done, and -v means verbose.
+shred -zuv -n 7 file
+지금 컴퓨터 끄기
+shutdown -h now
+지금 컴퓨터 재시작
+shutdown -r now
+원격 컴퓨터에 로그인하기
+ssh IP address
+루트 쉘을 열고 exit할 때까지 수퍼유저 권한을 갖는다. sudo su와 달리 사용자 환경변수에 상관없이 루트 쉘을 시작한다.
+sudo -i
+sudo -i와 같이 루트 쉘을 연다. 그러나 이 방법은 사용자 환경변수 유지한다. exit으로 일반 쉘로 돌아간다.
+sudo su
+특정 디렉토리와 그 안의 모든 파일의 압축 파일을 만들기
+tar czf dirname.tgz dirname
+현재 디렉토리에 압축 파일을 풀기
+tar zxvf archive
+cpu 사용량 기준으로 현재 프로세스 목록 보기. 끝내려면 q를, 도움말은 h를 누른다.
+top
+빈 파일 만들기. 단, 파일이 없어야 한다.
+touch filename
+현재 터미널 이름 보기
+tty
+리눅스 커널 보기
+uname -a
+컴퓨터의 프로세스 아키텍처 보기
+uname -m
+명령어의 man 페이지의 한줄 요약 보기
+whatis command
+프로그램의 파일 시스템 위치 보기
+whereis command
+어플리케이션의 경로 보기
+which command
+컴퓨터에 로그인한 사용자 보기
+who
+내 로그인 이름 보기
+whoami
+This will display the output of test.log as it is being written to by another program
+tail –follow test.log
+디렉토리 쉘을 오가면서 디렉토리의 파일이나 어플리케이션을 열고 싶다면 파일명 앞에 이 명령어를 붙여라. 예.
+./filename.txt
+이스케이프 연산자. 이름에 공백이 있는 파일을 열 때 공백 바로 전에 사용하라.
+\
+물결표는 홈 디렉토리를 말한다.
+~
+Run any command when the system load is low
+batch command
+Display cpu info
+cat /proc/cpuinfo
+Display memory usage
+cat /proc/meminfo
+Display networking devices
+cat /proc/net/dev
+Display performance information
+cat /proc/uptime
+Display kernel version
+cat /proc/version
+파일 내용 보기
+cat filename
+파티션 테이블 목록 보기
+fdisk -l
+Show the properties/compression of a file or package
+file package_name
+파일 찾기
+find / -name filename
+*.gz로 압축 파일 만들기
+gzip test.txt
+*.gz 파일 압축 풀기
+gzip -d test.txt.gz
+압축 파일의 압축비 보기
+gzip -l *.gz
+파일 상태 보기
+stat filename.txt
+인터넷에서 파일 받기
+wget http://remote_file_url
+
+
+ Linux에서 특정 명령을 실행하거나 ,특정 파일에 접근하기 위해 때로는 루트(root) 권한이 필요한 경우
+사용하게 되는 su/su -/ sudo 명령어들 그리고 각 명령어들의 차이점.
+	
+https://gxnzi.tistory.com/75
