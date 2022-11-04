@@ -1,5 +1,3 @@
-laravel 정리
-
 목차
 개요
 Controller, Model, Resource
@@ -28,7 +26,7 @@ api 응답을 위한 항목 Resource, 목록 ListResource
 php artisan make:resource Player/PlayerResource
 php artisan make:resource Client/ClientListResource
 메소드 구현 : index() - 복수 , show() -단수, store() - create, update() - update, destroy()- delete
- 참고 - 
+ 참고 -
 artisan: https://github.com/seokjoon/doc-cs/tree/master/lang.php.laravel/lang.php.laravel.cmd.artisan.md
 resource: https://laravel.kr/docs/8.x/eloquent-resources
 
