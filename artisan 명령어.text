@@ -1,3 +1,20 @@
+php artisan help migrate
+('migrate'는 예시) 해당 명령어의 인자와 , 옵션을 확인 하고 싶을 때 help 를 붙이면 된다.
+php artisan tinker
+커맨드 라인에서 Eloquent모델, job, 이벤트 등을 포함, 라라벨 애플리케이션 전체를 사용 가능.
+php artisan vendor:publish --provider="Laravel/Tinker/TinkerSeviceProvider"
+vendor:publish 명령어로 tinker의 설정 파일을 별도로 만들수 있음.
+
+
+
+
+
+
+
+
+
+php artisan list
+실행가능한 아티즌 명령어 목록 확인 시
 php artisan cache:clear
 캐시 삭제
 

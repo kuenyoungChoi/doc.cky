@@ -1,5 +1,3 @@
-bash (리눅스) command
-
 출처 : HaydenJames.io
 몇몇 명령어는 (sudo) 권한이 필요하다.
 바로 전 명령어 실행하기:
@@ -204,5 +202,5 @@ wget http://remote_file_url
 
  Linux에서 특정 명령을 실행하거나 ,특정 파일에 접근하기 위해 때로는 루트(root) 권한이 필요한 경우
 사용하게 되는 su/su -/ sudo 명령어들 그리고 각 명령어들의 차이점.
-	
+
 https://gxnzi.tistory.com/75

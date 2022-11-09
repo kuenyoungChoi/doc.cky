@@ -1,0 +1,8 @@
+v-data-table
+https://v15.vuetifyjs.com/ko/components/data-tables/
+
+
+
+v-container
+중앙 중심의 페이지에 적용. 만약 전체 너비를 이용하고자 할 경우 fluid 속성(prop)을 전달.
+<v-container fluid>
