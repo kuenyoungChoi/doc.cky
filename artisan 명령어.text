@@ -1,20 +1,33 @@
 php artisan cache:clear
 캐시 삭제
+
 php artisan config:cache
 설정내역 로딩 최적화
+
 php artisan config:clear
+
+php artisan daDb:dml
+DB 초기화
+
 php artisan db:seed
 seeder 실행(composer dump-autoload 이후)
+
 php artisan db:seed --class=UsersTableSeeder
+
 php artisan event:generate
 이벤트 채널과 리스너 스캐폴드 생성
+
 php artisan down, php artisan up
 앱 다운/업
+
 php artisan down --message="Upgrading Database" --retry=60
+
 php artisan down --allow=127.0.0.1 --allow=192.168.0.0/16
+
 php artisan key:generate
 앱 키 설정
 php artisan make:auth
+
 인증 라우트/뷰 스캐폴딩(라라벨 내장 사용자 인증 생성)
 php artisan make:channel FooChannel
 채널 클래스 생성
