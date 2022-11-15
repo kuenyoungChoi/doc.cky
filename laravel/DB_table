@@ -1,0 +1,106 @@
+-테이블 생성
+
+1. 마이그레이션 생성
+    php artisan make:migration create_foo_table
+
+
+2. 테이블 생성 : up 과 down 존재. up 과 down은 반대의 개념으로 설정해줘야한다.
+    ex) up() 영역
+
+    Schema::create('users', function (Blueprint $table) {
+    $table->id();
+    $table->string('title');
+    $table->string('userName');
+    $table->timestamps();
+    });
+
+    down() 영역
+
+    Schema::drop('users');
+
+-테이블 수정
+
+1. 테이블 컬럼 추가
+    ex)
+        Schema::table('users', function (Blueprint $table) {
+        $table->integer('votes);
+        });
+
+2. 테이블 이름변경/제거
+    ex) 이름변경
+    Schema::rename($from, $to);
+
+    ex) 제거
+    Schema::dropIfExists('users');
+
+
+
+**외래 키를 가진 테이블의 이름 변경
+  테이블의 이름 변경하기 전에, 마이그레이션 파일에서 라라벨의 규약(Convention)에 따르는 기본 이름으로 지정되지 않고 고유한 이름을 붙인 외래 키 제약 조건이 존재하지 않는지 확인하십시오.
+  그렇지 않다면 외래 키 제약의 이름이 기존 테이블 이름을 참고하게 됩니다.
+
+
+**수정자 : modifier
+
+
+-컬럼
+
+1. 컬럼순서 - after메서드 사용시 스키마의 기존 컬럼 뒤에 컬럼 추가
+    ex)
+     $table->after('password', function ($table) {
+     $table->string('address_line1');
+     })
+
+2. 컬럼 수정 - 전제 조건
+           열을 수정하기 전에 Composer 패키지 관리자를 사용하여 doctrine/dbal 패키지를 설치해야 합니다.
+           Doctrine DBAL 라이브러리는 컬럼의 현재 상태를 확인하고 컬럼에 요청된 변경을 수행하는 데 필요한 SQL 쿼리를 만드는 데 사용됩니다.
+
+
+
+
+
+
+
+***논리적 그룹화
+
+- where절을 그룹화한다. 예상하지 않은 쿼리 동작을 방지하기 위해 orWhere메서드는 일반적으로 항상 괄호안에 그룹화 한다. 이를 위해 where 메서드에 클로저를 전달 할수있다.
+
+    ex) $users = DB::table('users')
+        ->where('name', '=', 'John')
+        ->where(function ($query) {
+        $query->where('votes, '>', 100)
+              ->orWhere('title', '=', 'Admin');
+        })
+        ->get();
+
+        위 예제는 다음과 같은 SQL을 생성 할 것이다.
+        select * from users where name = 'John' and (votes > 100 or title = 'Admin')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
